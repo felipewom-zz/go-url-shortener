@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Golang URL Shortener</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2>Golang URL Shortener</h2>
+            <form class="form-group" action="/shorten" method="POST">
+                <input type="text" class="form-input" name="url" style="width: 35em;"/>
+                <input type="submit" class="btn btn-primary" value="Shorten!"/>
+                <h5>{{ .FORM_RESULT}}</h5>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                {{range $key, $value := .URL_LIST}}
+                    <li class="list-group-item">
+                        <small>{{$value}}</small>
+                        <span class="badge badge-primary badge-pill">
+                            <a target="_blank" class="text-white" href="/u/{{$key}}">{{$key}}</a>
+                        </span>
+                    </li>
+                {{end}}
+            </ul>
+            {{ if IsPositive .URL_COUNT }}
+                <p>{{ .URL_COUNT }} URLs shortened</p>
+            {{ end }}
+            <form class="form-group" action="/clear_cache" method="POST">
+                <input type="submit" class="btn btn-primary" value="Clear DB"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
